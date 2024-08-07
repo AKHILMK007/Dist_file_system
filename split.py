@@ -2,7 +2,7 @@ import os
 import json
 import math
 
-def split(file_path):
+def my_split(file_path):
     try:
         with open(file_path, 'r') as file:
             file_content = file.read()
