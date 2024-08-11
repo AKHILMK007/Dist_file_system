@@ -2,25 +2,31 @@
 import pika
 import json
 import split
-# connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
-# channel = connection.channel()
-# channel.queue_declare(queue='hello')
-connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
+import random
+
+# Establish connection to RabbitMQ
+connection = pika.BlockingConnection(pika.ConnectionParameters('localhost', 5672))
 channel = connection.channel()
 
+# Declare an exchange of type 'topic'
 channel.exchange_declare(exchange='topic_logs', exchange_type='topic')
 
-routing_key = 'app.info'  # Example routing key
-message=split.my_split("try.txt")
+# Define worker routing keys
+worker_routing_keys = ['worker1', 'worker2']
+
+# Read and split the message
+message = split.my_split("try2.txt")
 print(message)
 
-# message = json.dumps({'string': 'Hello World!'})
+# Publish each chunk to a randomly chosen worker
 for keys in message:
-    print(message[keys])
-    channel.basic_publish(exchange='topic_logs',
-                      routing_key=routing_key,
-                      body=json.dumps({keys:message[keys]}))
-print(" [x] Sent 'Hello World!'")
-connection.close()
+    selected_worker = random.choice(worker_routing_keys)  # Randomly select a worker
+    print(f"Publishing to {selected_worker}: {message[keys]}")
+    channel.basic_publish(
+        exchange='topic_logs',
+        routing_key=selected_worker,
+        body=json.dumps({keys: message[keys]})
+    )
 
-#channel.basic_publish(exchange='topic_logs', routing_key=routing_key, body=message)
+print(" [x] Messages sent")
+connection.close()
