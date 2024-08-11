@@ -1,5 +1,10 @@
 {
-    "chunk_1": "worker5",
-    "chunk_2": "worker3",
-    "chunk_3": "worker2"
+    "try2.txt": {
+        "worker3": [
+            "try2_1"
+        ],
+        "worker1": [
+            "try2_2"
+        ]
+    }
 }

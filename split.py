@@ -8,7 +8,7 @@ def my_split(file_path):
             file_content = file.read()
         
         total_length = len(file_content)
-        chunk_size = math.ceil(total_length / 3)
+        chunk_size = math.ceil(total_length / 2)
         
         chunks = [file_content[i:i + chunk_size] for i in range(0, total_length, chunk_size)]
         
