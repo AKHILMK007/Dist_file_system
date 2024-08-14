@@ -3,7 +3,7 @@ rabbitmqctl status
 
 
 i am building simple distributed file system i which there is one master which stores and retrive files for multiple workers.
-for each file master breaks the file into 3 parts and stores them in different worker also it has info about which file is in which worker for easy retrival.
+for each file master breaks the file into 2 parts and stores them in different worker also it has info about which file is in which worker for easy retrival.
 i am building this system using python and rabbitMQ 
 give me the steps i should follow and some design and possibaly some code 
 
